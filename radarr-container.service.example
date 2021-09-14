@@ -1,0 +1,27 @@
+[Unit]
+Description=Podman container of the radarr application
+After=network-online.target
+Wants=network-online.target
+
+
+[Service]
+WorkingDirectory=/mnt/somemount
+User=$SOMEUNPRIVILEGEDUSER
+Group=$SOMEUNPRIVILEGEDUSER
+ExecStart=podman \
+run \
+--name=radarr \
+--rm \
+--annotation run.oci.keep_original_groups=1 \
+--pod arr \
+-v /mnt/somemount:/config:Z \
+-v /mnt/somemount:/movies:rw \
+-v /mnt/somemount:/downloads:ro \
+--tz=local \
+--pull=always \
+ghcr.io/40d/radarr-podman
+ExecStop=podman stop -t 2 radarr
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
