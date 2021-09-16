@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 build0=$(buildah from alpine:3)
-buildah run "$build0" sh -c "apk add --no-cache --update curl \
+buildah run "$build0" sh -c "apk add --no-cache -q --update curl \
   libmediainfo \
   icu \
   sqlite-libs \
