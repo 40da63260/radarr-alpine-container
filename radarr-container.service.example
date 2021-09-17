@@ -13,13 +13,13 @@ run \
 --name=radarr \
 --rm \
 --annotation run.oci.keep_original_groups=1 \
---pod arr \
+--pod podarr \
 -v /mnt/somemount:/config:Z \
 -v /mnt/somemount:/movies:rw \
 -v /mnt/somemount:/downloads:ro \
 --tz=local \
 --pull=always \
-ghcr.io/40d/radarr-podman
+ghcr.io/40da63260/radarr-alpine-container
 ExecStop=podman stop -t 2 radarr
 Nice=5
 

@@ -12,5 +12,8 @@ buildah run "$build0" sh -c "apk add --no-cache -q --update curl \
   tar xz -C /app/radarr/bin --strip-components=1 &&\
   rm -rf /tmp/* /app/radarr/bin/Radarr.Update &&\
   apk del apk-tools curl -q"
-buildah config --entrypoint "/app/radarr/bin/Radarr -nobrowser -data=/config" "$build0"
+buildah config --entrypoint '["/app/radarr/bin/Radarr","-nobrowser","-data=/config"]' \
+ --port 7878 \
+ --volume /config \
+ --volume /movies "$build0"
 buildah commit --rm "$build0" radarr-alpine-container:latest
